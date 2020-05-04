@@ -2,6 +2,9 @@ language: java
 sudo: true
 dist: trusty
 jdk: oraclejdk9
+cache:
+  directories:
+    - "$HOME/.m2"
 addons:
   apt:
     packages:
