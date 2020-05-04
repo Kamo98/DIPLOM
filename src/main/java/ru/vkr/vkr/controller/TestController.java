@@ -40,4 +40,9 @@ public class TestController {
 
         return "print";
     }
+
+    @GetMapping("/testGroup")
+    public String testGroup() {
+        return "group";
+    }
 }
