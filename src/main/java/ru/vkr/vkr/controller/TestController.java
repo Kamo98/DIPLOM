@@ -14,6 +14,17 @@ import java.util.List;
 @Controller
 public class TestController {
 
+
+    @GetMapping("/signin")
+    public String getSignin(Model model) {
+        return "signin";
+    }
+
+    @GetMapping("/")
+    public String getMain(Model model) {
+        return "group";
+    }
+
     @GetMapping("/genTeams")
     public String genTeams(Model model) {
         Test test = new Test();
@@ -30,7 +41,7 @@ public class TestController {
         Test test = new Test();
         ITeam[] teams_ = test.get_all_teams();
         List<String> teams = new ArrayList<>();
-        for (ITeam team: teams_) {
+        for (ITeam team : teams_) {
             teams.add(team.getDisplayName());
         }
 
@@ -39,5 +50,10 @@ public class TestController {
         test.disconnect();
 
         return "print";
+    }
+
+    @GetMapping("/testGroup")
+    public String testGroup() {
+        return "group";
     }
 }

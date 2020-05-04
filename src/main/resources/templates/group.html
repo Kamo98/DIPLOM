@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="base :: common_header(~{::title})">
+    <title>Группа</title>
+</head>
+
+<body>
+
+    <div th:replace="base :: navigation"></div>
+
+    <div class="container">
+        <div class="row row-margin-bottom">
+            <div class="col">
+                <div class="container">
+                    <div class="row row-margin-bottom">
+                        <div class = "col border rounded-lg quick-panel">
+                            <h5><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;Мои отправки</h5>
+                            <hr />
+                            <ul>
+                                <li><a href="#">Задача 1</a></li>
+                                <li><a href="#">Задача 2</a></li>
+                                <li><a href="#">Задача 3</a></li>
+                                <li><a href="#">Задача 5</a></li>
+                                <li><a href="#">Задача 6</a></li>
+                                <li><a href="#">Задача 7</a></li>
+                                <li><a href="#">Задача 8</a></li>
+                                <li><a href="#"><i class="fa fa-shield fa-rotate-270"></i>&nbsp;Ещё...</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row row-margin-bottom">
+                        <div class = "col border rounded-lg quick-panel">
+                            <h5><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Мои группы</h5>
+                            <hr />
+                            <ul>
+                                <li><a href="#">Группа 1</a></li>
+                                <li><a href="#">Группа 2</a></li>
+                                <li><a href="#">Группа 3</a></li>
+                                <li><a href="#">Группа 4</a></li>
+                                <li><a href="#">Группа 5</a></li>
+                                <li><a href="#"><i class="fa fa-shield fa-rotate-270"></i>&nbsp;Ещё...</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-9 main-content border rounded-lg">
+                <h5 class="centered green-h">Олимпийская сборная (2й курс)</h5>
+
+
+                <ul class="nav nav-pills tabs-menu">
+                    <li>
+                        <a class="nav-link active" href="#"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Состав группы</a>
+                    </li>
+                    <li>
+                        <a class="nav-link " href="#"><i class="fa fa-table" aria-hidden="true"></i>&nbsp;Результаты группы</a>
+                    </li>
+                    <li>
+                        <a class="nav-link " href="#"> <i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;Задание группе</a>
+                    </li>
+                </ul>
+
+
+
+
+                <div class="container">
+
+                    <div class="row item-mylist">
+                        <div class="col col-align-center">
+                            <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
+                            Иванов Иван Иванович
+                        </div>
+                        <div class="col col-align-center">
+                            <a href="#"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;
+                                Личные результаты
+                            </a>
+                        </div>
+                        <div class="col-1">
+                            <a class="btn btn-dark" href="#"><i class="fa fa-pencil fa-fw"></i></a>
+                        </div>
+                        <div class="col-1">
+                            <a class="btn btn-danger" href="#"><i class="fa fa-trash-o fa-lg"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="row item-mylist">
+                        <div class="col col-align-center">
+                            <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
+                            Иванов Иван Иванович
+                        </div>
+                        <div class="col col-align-center">
+                            <a href="#"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;
+                                Личные результаты
+                            </a>
+                        </div>
+                        <div class="col-1">
+                            <a class="btn btn-dark" href="#"><i class="fa fa-pencil fa-fw"></i></a>
+                        </div>
+                        <div class="col-1">
+                            <a class="btn btn-danger" href="#"><i class="fa fa-trash-o fa-lg"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="row item-mylist">
+                        <div class="col col-align-center">
+                            <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
+                            Иванов Иван Иванович
+                        </div>
+                        <div class="col col-align-center">
+                            <a href="#"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;
+                                Личные результаты
+                            </a>
+                        </div>
+                        <div class="col-1">
+                            <a class="btn btn-dark" href="#"><i class="fa fa-pencil fa-fw"></i></a>
+                        </div>
+                        <div class="col-1">
+                            <a class="btn btn-danger" href="#"><i class="fa fa-trash-o fa-lg"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="row item-mylist">
+                        <div class="col col-align-center">
+                            <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
+                            Иванов Иван Иванович
+                        </div>
+                        <div class="col col-align-center">
+                            <a href="#"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;
+                                Личные результаты
+                            </a>
+                        </div>
+                        <div class="col-1">
+                            <a class="btn btn-dark" href="#"><i class="fa fa-pencil fa-fw"></i></a>
+                        </div>
+                        <div class="col-1">
+                            <a class="btn btn-danger" href="#"><i class="fa fa-trash-o fa-lg"></i></a>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row row-margin-top">
+                        <div class = "col">
+                            <button class="btn btn-primary">
+                                <i class="fa fa-key" aria-hidden="true"></i>&nbsp;Скачать логины и пароли
+                            </button>
+                        </div>
+                        <div class = "col">
+
+                        </div>
+                        <div class = "col col-align-right">
+                            <button class="btn btn-danger">
+                                <i class="fa fa-trash-o fa-lg"></i>&nbsp;Удалить группу
+                            </button>
+                        </div>
+                    </div>
+
+                    <form>
+                        <div class="row row-margin-top">
+                            <div class="col">
+                                <h6 ><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;Добавление новых членов команды</h6 >
+                                <div class="form-group">
+                                    <label for="addPersonInGroup">Одна строка - ФИО одного члена команды</label>
+                                    <textarea class="form-control" id="addPersonInGroup" rows="8" cols="20"></textarea>
+                                </div>
+                                <button class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp; Добавить</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <footer th:replace="base :: footer"></footer>
+</body>
+</html>
