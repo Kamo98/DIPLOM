@@ -14,6 +14,12 @@ import java.util.List;
 @Controller
 public class TestController {
 
+
+    @GetMapping("/signin")
+    public String getSignin(Model model) {
+        return "signin";
+    }
+
     @GetMapping("/")
     public String getMain(Model model) {
         return "group";
