@@ -19,14 +19,10 @@ import ru.vkr.vkr.service.UserService;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
-
     @Autowired
     private AccessDeniedHandler accessDeniedHandler;
-
-    @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
-        return new MySimpleUrlAuthenticationSuccessHandler();
-    }
+    @Autowired
+    private MySimpleUrlAuthenticationSuccessHandler mySimpleUrlAuthenticationSuccessHandler;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -57,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     //Настройка для входа в систему
                     .formLogin()
                     .loginPage("/login")
-                    .successHandler(myAuthenticationSuccessHandler())
+                    .successHandler(mySimpleUrlAuthenticationSuccessHandler)
                     .permitAll()
                 .and()
                     .logout()
