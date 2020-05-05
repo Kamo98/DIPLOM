@@ -12,23 +12,6 @@ import java.util.List;
 
 @Controller
 public class TestController {
-
-    @GetMapping("/teacher/group")
-    public String getMain(Model model) {
-        return "group";
-    }
-
-    @GetMapping("/student/genTeams")
-    public String genTeams(Model model) {
-        Test test = new Test();
-
-        List<String> resultsGen = test.generate_teams();
-        test.disconnect();
-
-        model.addAttribute("resultsGen", resultsGen);
-        return "gen";
-    }
-
     @GetMapping("/print")
     public String ptint(Model model) {
         Test test = new Test();

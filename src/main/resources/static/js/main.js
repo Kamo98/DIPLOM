@@ -5,3 +5,9 @@ $('.tabs-menu a').click(function(e){
     $('#containerOfTabs>div').hide();
     e.preventDefault();
 });
+
+$(document).ready(function(){
+    $("#submit").click(function(){
+        $("#form").submit();
+    })
+})
