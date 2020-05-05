@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import ru.vkr.vkr.service.UserService;
 
 @Configuration
@@ -16,6 +17,9 @@ import ru.vkr.vkr.service.UserService;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -50,7 +54,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .logout()
                     .permitAll()
-                    .logoutSuccessUrl("/login");
+                    .logoutSuccessUrl("/login")
+                .and()
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
 
     @Autowired

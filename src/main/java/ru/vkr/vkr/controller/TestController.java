@@ -50,4 +50,9 @@ public class TestController {
 
         return "print";
     }
+
+    @GetMapping("/403")
+    public String error403() {
+        return "/error/403";
+    }
 }
