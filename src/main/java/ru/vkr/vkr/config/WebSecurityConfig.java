@@ -23,14 +23,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                .antMatchers("/css/**", "/fonts/**", "/img/**");
+    }
+
+    @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                    .antMatchers("/css/**", "/fonts/**", "/img/**").permitAll()
                     //Доступ только для пользователей с ролью Администратор
-                    .antMatchers("/admin/**").hasRole("ADMIN")
+                    .antMatchers("/admin/**", "/").hasRole("ADMIN")
                     //Доступ только для пользователей с ролью Преподаватель
                     .antMatchers("/teacher/**").hasRole("TEACHER")
                     //Доступ только для пользователей с ролью Студент

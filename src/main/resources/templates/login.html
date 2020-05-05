@@ -7,6 +7,12 @@
 
 <body class="text-center">
 <div class="col-9 main-content border rounded-lg" id="divsignin">
+    <div th:if="${param.error}">
+        Invalid username and password.
+    </div>
+    <div th:if="${param.logout}">
+        You have been logged out.
+    </div>
 <form class="form-signin" method="POST" th:action="@{/login}">
     <img class="mb-4" src="img/altstu-logo.png" alt="" width="100" height="100">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>

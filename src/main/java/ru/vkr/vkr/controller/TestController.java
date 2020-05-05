@@ -18,6 +18,12 @@ public class TestController {
         return "group";
     }
 
+    @GetMapping("/group")
+    public String getGroup(Model model) {
+        return "group";
+    }
+
+
     @GetMapping("/student/genTeams")
     public String genTeams(Model model) {
         Test test = new Test();
