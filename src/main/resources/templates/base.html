@@ -36,7 +36,9 @@
                         </li>
 
                     </ul>
-                    <a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Войти</a>
+                    <form th:action="@{/logout}" method="post">
+                        <i class="fa fa-sign-in" aria-hidden="true"></i> &nbsp;<input type="submit" value="Sign Out"/>
+                    </form>
                 </div>
             </nav>
         </div>
