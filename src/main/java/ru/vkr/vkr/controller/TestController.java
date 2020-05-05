@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.vkr.vkr.contest.Test;
-import sun.text.normalizer.NormalizerBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,29 +40,4 @@ public class TestController {
 
         return "print";
     }
-
-    @GetMapping("/group")
-    public String testGroup() {
-        return "group";
-    }
-
-    @GetMapping("/group-create")
-    public String group_create(Model model) {
-        model.addAttribute("isCreate", true);
-        return "group";
-    }
-
-    @GetMapping("/course")
-    public String testCourse() {
-        return "course";
-    }
-
-
-    @GetMapping("/theme")
-    public String testTheme() {
-        return "theme";
-    }
-
-
-
 }

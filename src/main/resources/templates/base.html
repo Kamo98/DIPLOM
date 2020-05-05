@@ -8,8 +8,8 @@
         <title th:replace="${title}">Title</title>
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+        <link rel="stylesheet" th:href="@{/css/main.css}">
     </head>
 
 
@@ -77,13 +77,14 @@
                         <h5><i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;Мои курсы</h5>
                         <hr />
                         <ul>
-                            <li><a href="/course">Курс 1</a></li>
-                            <li><a href="/course">Курс 2</a></li>
-                            <li><a href="/course">Курс 3</a></li>
-                            <li><a href="/course">Курс 4</a></li>
-                            <li><a href="/course">Курс 5</a></li>
+                            <li><a th:href="@{/teacher/course}">Курс 1</a></li>
+                            <li><a th:href="@{/teacher/course}">Курс 2</a></li>
+                            <li><a th:href="@{/teacher/course}">Курс 3</a></li>
+                            <li><a th:href="@{/teacher/course}">Курс 4</a></li>
+                            <li><a th:href="@{/teacher/course}">Курс 5</a></li>
+                            <li><a th:href="@{/teacher/course}">Курс 6</a></li>
                         </ul>
-                        <div class="link-new"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Создать курс</a></div>
+                        <div class="link-new"><a th:href="@{/teacher/course-create}"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Создать курс</a></div>
                     </div>
                 </div>
 
@@ -92,13 +93,12 @@
                         <h5><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Мои группы</h5>
                         <hr />
                         <ul>
-                            <li><a href="/group">Группа 1</a></li>
-                            <li><a href="/group">Группа 2</a></li>
-                            <li><a href="/group">Группа 3</a></li>
-                            <li><a href="/group">Группа 4</a></li>
-                            <li><a href="/group">Группа 5</a></li>
+                            <li><a th:href="@{/teacher/group}">Группа 1</a></li>
+                            <li><a th:href="@{/teacher/group}">Группа 2</a></li>
+                            <li><a th:href="@{/teacher/group}">Группа 3</a></li>
+                            <li><a th:href="@{/teacher/group}">Группа 4</a></li>
                         </ul>
-                        <div class="link-new"><a href=""><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Создать группу</a></div>
+                        <div class="link-new"><a th:href="@{/teacher/group-create}"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Создать группу</a></div>
                     </div>
                 </div>
 
@@ -115,7 +115,7 @@
             <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-            <script src="js/main.js"></script>
+            <script th:src="@{/js/main.js}"></script>
         </footer>
 
 

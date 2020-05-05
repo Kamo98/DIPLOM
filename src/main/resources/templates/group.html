@@ -18,31 +18,30 @@
 
 
             <div class="main-content col-9 border rounded-lg">
-                <h5 class="centered green-h">Олимпийская сборная (2й курс)</h5>
+                <h5 class="centered green-h" th:unless="${isCreate}">Группа "Олимпийская сборная (2й курс)"</h5>
+                <h5 class="centered green-h" th:if="${isCreate}">Группа "Без названия"</h5>
 
 
                 <ul class="nav nav-pills tabs-menu">
-                    <li>
+                    <li th:unless="${isCreate}">
                         <a class="nav-link active" href="#" id="linkGroupMembers"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Состав группы</a>
                     </li>
-                    <li>
+                    <li th:unless="${isCreate}">
                         <a class="nav-link " href="#" id="linkGroupResults"><i class="fa fa-table" aria-hidden="true"></i>&nbsp;Результаты группы</a>
                     </li>
-                    <li>
+                    <li th:unless="${isCreate}">
                         <a class="nav-link " href="#" id="linkGroupProblems"> <i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;Задание группе</a>
                     </li>
                     <li>
                         <a class="nav-link " href="#" id="linkGroupSettings"> <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Параметры</a>
                     </li>
-
                 </ul>
-
 
 
 
                 <div class="container" id="containerOfTabs">
 
-                    <div id="groupMembers">
+                    <div id="groupMembers" th:unless="${isCreate}">
                         <div class="alert alert-warning" role="alert">
                             Группа пуста. Добавьте студентов.
                         </div>
@@ -149,11 +148,11 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </div >
 
-                    <div id="groupSettings">
 
-                        <form>
+                    <div id="groupSettings" style="display: none;">
+                        <form th:action="@{/teacher/group}">
                             <div class="row row-margin-top">
                                 <div class="col-3 col-align-center">
                                     <label for="nameOfGroup">Наименование группы</label>
@@ -162,22 +161,21 @@
                                     <input type="text" id="nameOfGroup" class="form-control">
                                 </div>
                             </div>
-                        </form>
 
-                        <div class="row row-margin-top">
-                            <div class = "col col-align-right">
-                                <button class="btn btn-primary">
-                                    <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Сохранить
-                                </button>
+                            <div class="row row-margin-top">
+                                <div class = "col col-align-right">
+                                    <button class="btn btn-primary" th:unless="${isCreate}">
+                                        <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Сохранить
+                                    </button>
 
-                                <button class="btn btn-primary">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Создать
-                                </button>
+                                    <button class="btn btn-primary" th:if="${isCreate}">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Создать
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-
-
+                        </form>
                     </div>
+
                 </div>
 
             </div>
@@ -186,6 +184,15 @@
     </div>
 
     <footer th:replace="base :: footer"></footer>
+
+
+
+    <script th:if="${isCreate}">
+        //Небольшой костыль, чтобы при запуске страницы создания активировалась вкладка с настройками
+        $(document).ready(function() {
+            $("#linkGroupSettings").click();
+        });
+    </script>
 
     <script>
         //Клик по вкладке Состав группы

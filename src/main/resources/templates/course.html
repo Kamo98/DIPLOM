@@ -19,17 +19,18 @@
 
 
             <div class="main-content col-9 border rounded-lg">
-                <h5 class="centered green-h">Курс "Олимпиадные тренировки"</h5>
+                <h5 class="centered green-h" th:unless="${isCreate}">Курс "Олимпиадные тренировки"</h5>
+                <h5 class="centered green-h" th:if="${isCreate}">Курс "Без названия"</h5>
 
 
                 <ul class="nav nav-pills tabs-menu">
-                    <li>
+                    <li th:unless="${isCreate}">
                         <a class="nav-link active" href="" id="linkThemeOfCourse"><i class="fa fa-book fa-fw" aria-hidden="true"></i>&nbsp;Темы курса</a>
                     </li>
-                    <li>
+                    <li th:unless="${isCreate}">
                         <a class="nav-link " href="" id="linkProblemsOfCourse"><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;Задачи курса</a>
                     </li>
-                    <li>
+                    <li th:unless="${isCreate}">
                         <a class="nav-link " href="" id="linkSubscribeOfCourse"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Подписчики курса</a>
                     </li>
                     <li>
@@ -42,7 +43,7 @@
 
                 <div class="container" id="containerOfTabs">
 
-                    <div id="themesOfCourse">
+                    <div id="themesOfCourse" th:unless="${isCreate}">
                         <div class="alert alert-warning" role="alert">
                             Курс пока не содержит ни одной темы.
                         </div>
@@ -94,7 +95,7 @@
                         </div>
                     </div>
 
-                    <div id="subscribesOfCourse" style="display: none;">
+                    <div id="subscribesOfCourse" th:unless="${isCreate}" style="display: none;">
                         <div class="alert alert-warning" role="alert">
                             На курс пока не подписана ни одна группа
                         </div>
@@ -142,7 +143,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col">
-                                            <input type="radio" name="typeAddGroup" id="typeAddSelect" class="form-control">
+                                            <input type="radio" name="typeAddGroup" id="typeAddSelect">
                                             <label for="typeAddSelect">Выбрать группу из существующих</label>
                                         </div>
 
@@ -156,7 +157,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="radio" name="typeAddGroup" id="typeAddNew" class="form-control">
+                                    <input type="radio" name="typeAddGroup" id="typeAddNew">
                                     <label for="typeAddNew">Создать новую группу и подписать</label>
                                 </div>
                             </div>
@@ -166,6 +167,30 @@
                         </div>
                     </div>
 
+                    <div id="courseSettings" style="display: none;">
+                        <form th:action="@{/teacher/course}">
+                            <div class="row row-margin-top">
+                                <div class="col-3 col-align-center">
+                                    <label for="nameOfCourse">Наименование курса</label>
+                                </div>
+                                <div class="col">
+                                    <input type="text" id="nameOfCourse" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="row row-margin-top">
+                                <div class = "col col-align-right">
+                                    <button class="btn btn-primary" th:unless="${isCreate}">
+                                        <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Сохранить
+                                    </button>
+
+                                    <button class="btn btn-primary" th:if="${isCreate}">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Создать
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -175,6 +200,13 @@
 
 
     <footer th:replace="base :: footer"></footer>
+
+    <script th:if="${isCreate}">
+        //Небольшой костыль, чтобы при запуске страницы создания активировалась вкладка с настройками
+        $(document).ready(function() {
+            $("#linkCourseSettings").click();
+        });
+    </script>
 
     <script>
         //Клик по вкладке Темы курса
@@ -198,6 +230,18 @@
         //Клик по вкладке Параметры
         $('#linkCourseSettings').click(function(e){
             $('#linkCourseSettings').addClass('active');
+            $('#courseSettings').show();
+        });
+
+
+
+        //Обработка кликов по радио-кнопкам с выбором типа подписки группы
+        $('#typeAddSelect').click(function(e){
+            $('#selectGroups').attr('disabled', false);
+        });
+
+        $('#typeAddNew').click(function(e){
+            $('#selectGroups').attr('disabled', true);
         });
     </script>
 </body>
