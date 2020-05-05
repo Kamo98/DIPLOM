@@ -13,16 +13,10 @@ import java.util.List;
 @Controller
 public class TestController {
 
-    @GetMapping("/admin/group")
+    @GetMapping("/teacher/group")
     public String getMain(Model model) {
         return "group";
     }
-
-    @GetMapping("/group")
-    public String getGroup(Model model) {
-        return "group";
-    }
-
 
     @GetMapping("/student/genTeams")
     public String genTeams(Model model) {

@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import ru.vkr.vkr.components.MySimpleUrlAuthenticationSuccessHandler;
 import ru.vkr.vkr.service.UserService;
 
 @Configuration
@@ -20,6 +22,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AccessDeniedHandler accessDeniedHandler;
+
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
+        return new MySimpleUrlAuthenticationSuccessHandler();
+    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -50,6 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     //Настройка для входа в систему
                     .formLogin()
                     .loginPage("/login")
+                    .successHandler(myAuthenticationSuccessHandler())
                     .permitAll()
                 .and()
                     .logout()
