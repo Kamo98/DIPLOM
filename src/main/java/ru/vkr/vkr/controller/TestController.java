@@ -4,7 +4,6 @@ package ru.vkr.vkr.controller;
 import edu.csus.ecs.pc2.api.ITeam;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.vkr.vkr.contest.Test;
 
@@ -13,29 +12,6 @@ import java.util.List;
 
 @Controller
 public class TestController {
-
-
-    @GetMapping("/signin")
-    public String getSignin(Model model) {
-        return "signin";
-    }
-
-    @GetMapping("/")
-    public String getMain(Model model) {
-        return "group";
-    }
-
-    @GetMapping("/genTeams")
-    public String genTeams(Model model) {
-        Test test = new Test();
-
-        List<String> resultsGen = test.generate_teams();
-        test.disconnect();
-
-        model.addAttribute("resultsGen", resultsGen);
-        return "gen";
-    }
-
     @GetMapping("/print")
     public String ptint(Model model) {
         Test test = new Test();
@@ -46,14 +22,14 @@ public class TestController {
         }
 
         model.addAttribute("teams", teams);
-        //test.generate_teams();
+
         test.disconnect();
 
         return "print";
     }
 
-    @GetMapping("/testGroup")
-    public String testGroup() {
-        return "group";
+    @GetMapping("/403")
+    public String error403() {
+        return "/error/403";
     }
 }
