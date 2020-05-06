@@ -3,8 +3,8 @@ package ru.vkr.vkr.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "t_teacher")
-public class Teacher {
+@Table(name = "t_student")
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

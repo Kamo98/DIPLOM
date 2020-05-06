@@ -13,20 +13,14 @@
     <div class="row row-margin-bottom justify-content-center">
 
         <div class="main-content col-9 border rounded-lg">
-            <h5 class="centered green-h" th:unless="${isCreate}">Преподаватели АлтГТУ</h5>
+            <h5 class="centered green-h">Преподаватели АлтГТУ</h5>
 
             <ul class="nav nav-pills tabs-menu">
-                <li th:unless="${isCreate}">
-                    <a class="nav-link active" href="#" id="linkGroupMembers"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Состав группы</a>
-                </li>
-                <li th:unless="${isCreate}">
-                    <a class="nav-link " href="#" id="linkGroupResults"><i class="fa fa-table" aria-hidden="true"></i>&nbsp;Результаты группы</a>
-                </li>
-                <li th:unless="${isCreate}">
-                    <a class="nav-link " href="#" id="linkGroupProblems"> <i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;Задание группе</a>
+                <li>
+                    <a class="nav-link active" href="#" id="linkTeachMembers"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Преподавательский состав</a>
                 </li>
                 <li>
-                    <a class="nav-link " href="#" id="linkGroupSettings"> <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Параметры</a>
+                    <a class="nav-link " href="#" id="linkTeachSettings"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Параметры</a>
                 </li>
             </ul>
 
@@ -34,69 +28,15 @@
 
             <div class="container" id="containerOfTabs">
 
-                <div id="groupMembers" th:unless="${isCreate}">
+                <div id="teachMembers">
                     <div class="alert alert-warning" role="alert">
                         Группа пуста. Добавьте студентов.
                     </div>
 
-                    <div class="row item-mylist">
+                    <div class="row item-mylist" th:each="teacher : ${teachers}">
                         <div class="col col-align-center">
                             <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
-                            Иванов Иван Иванович
-                        </div>
-                        <div class="col col-align-center">
-                            <a href="#"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;
-                                Личные результаты
-                            </a>
-                        </div>
-                        <div class="col-1">
-                            <a class="btn btn-dark" href="#"><i class="fa fa-pencil fa-fw"></i></a>
-                        </div>
-                        <div class="col-1">
-                            <a class="btn btn-danger" href="#"><i class="fa fa-trash-o fa-lg"></i></a>
-                        </div>
-                    </div>
-
-                    <div class="row item-mylist">
-                        <div class="col col-align-center">
-                            <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
-                            Иванов Иван Иванович
-                        </div>
-                        <div class="col col-align-center">
-                            <a href="#"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;
-                                Личные результаты
-                            </a>
-                        </div>
-                        <div class="col-1">
-                            <a class="btn btn-dark" href="#"><i class="fa fa-pencil fa-fw"></i></a>
-                        </div>
-                        <div class="col-1">
-                            <a class="btn btn-danger" href="#"><i class="fa fa-trash-o fa-lg"></i></a>
-                        </div>
-                    </div>
-
-                    <div class="row item-mylist">
-                        <div class="col col-align-center">
-                            <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
-                            Иванов Иван Иванович
-                        </div>
-                        <div class="col col-align-center">
-                            <a href="#"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;
-                                Личные результаты
-                            </a>
-                        </div>
-                        <div class="col-1">
-                            <a class="btn btn-dark" href="#"><i class="fa fa-pencil fa-fw"></i></a>
-                        </div>
-                        <div class="col-1">
-                            <a class="btn btn-danger" href="#"><i class="fa fa-trash-o fa-lg"></i></a>
-                        </div>
-                    </div>
-
-                    <div class="row item-mylist">
-                        <div class="col col-align-center">
-                            <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
-                            Иванов Иван Иванович
+                            [[ ${teacher.surname + " " + teacher.name + " " + teacher.middleName} ]]
                         </div>
                         <div class="col col-align-center">
                             <a href="#"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;
@@ -137,36 +77,15 @@
                                     <label for="addPersonInGroup">Одна строка - ФИО одного члена группы</label>
                                     <textarea class="form-control"  th:field="*{fios}" id="addPersonInGroup" rows="8" cols="20"></textarea>
                                 </div>
-                                <button class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp; Добавить</button>
+                                <button class="btn btn-success" type="submit"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp; Добавить</button>
                             </div>
                         </div>
                     </form>
                 </div >
 
 
-                <div id="groupSettings" style="display: none;">
-                    <form th:action="@{/teacher/group}">
-                        <div class="row row-margin-top">
-                            <div class="col-3 col-align-center">
-                                <label for="nameOfGroup">Наименование группы</label>
-                            </div>
-                            <div class="col">
-                                <input type="text" id="nameOfGroup" class="form-control">
-                            </div>
-                        </div>
+                <div id="teachSettings" style="display: none;">
 
-                        <div class="row row-margin-top">
-                            <div class = "col col-align-right">
-                                <button class="btn btn-primary" th:unless="${isCreate}">
-                                    <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Сохранить
-                                </button>
-
-                                <button class="btn btn-primary" th:if="${isCreate}">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Создать
-                                </button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
 
             </div>
@@ -179,36 +98,18 @@
 <footer th:replace="base :: footer"></footer>
 
 
-
-<script th:if="${isCreate}">
-    //Небольшой костыль, чтобы при запуске страницы создания активировалась вкладка с настройками
-    $(document).ready(function() {
-        $("#linkGroupSettings").click();
-    });
-</script>
-
 <script>
-    //Клик по вкладке Состав группы
-    $('#linkGroupMembers').click(function(e){
-        $('#linkGroupMembers').addClass('active');
-        $('#groupMembers').show();
-    });
-
-    //Клик по вкладке Результаты группы
-    $('#linkGroupResults').click(function(e){
-        $('#linkGroupResults').addClass('active');
-    });
-
-    //Клик по вкладке Задание группе
-    $('#linkGroupProblems').click(function(e){
-        $('#linkGroupProblems').addClass('active');
+    //Клик по вкладке Преподавательский состав
+    $('#linkTeachMembers').click(function(e){
+        $('#linkTeachMembers').addClass('active');
+        $('#teachMembers').show();
     });
 
 
     //Клик по вкладке Параметры
-    $('#linkGroupSettings').click(function(e){
-        $('#linkGroupSettings').addClass('active');
-        $('#groupSettings').show();
+    $('#linkTeachSettings').click(function(e){
+        $('#linkTeachSettings').addClass('active');
+        $('#teachSettings').show();
     });
 
 </script>

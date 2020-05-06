@@ -8,6 +8,7 @@ import java.util.Set;
 @Entity
 @Table(name = "t_role")
 public class Role implements GrantedAuthority {
+
     @Id
     private Long id;
     private String name;
