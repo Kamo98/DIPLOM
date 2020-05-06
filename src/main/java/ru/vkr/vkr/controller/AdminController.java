@@ -42,7 +42,7 @@ public class AdminController {
     }
 
 
-    @PostMapping("/admin/delTeacher/{teacherId}")
+    @GetMapping("/admin/delTeacher/{teacherId}")
     public String deleteTeacher(Model model, @PathVariable Long teacherId) {
         adminFacade.deleteTeacher(teacherId);
         return "redirect:/admin/teachers";

@@ -48,9 +48,10 @@
                             <a class="btn btn-dark" href="#"><i class="fa fa-pencil fa-fw"></i></a>
                         </div>
                         <div class="col-1">
-                            <form th:id="formDelTeacher" th:action="@{'/admin/delTeacher/' + ${teacher.id}}" method="post">
-                                <a class="btn btn-danger" th:id="delTeacher" href="javascript:void(0)"><i class="fa fa-trash-o fa-lg"></i></a>
-                            </form>
+                            <!--<form th:id="formDelTeacher" th:action="@{'/admin/delTeacher/' + ${teacher.id}}" method="post">-->
+                                <!--<a class="btn btn-danger" th:id="delTeacher" href="javascript:void(0)"><i class="fa fa-trash-o fa-lg"></i></a>-->
+                            <!--</form>-->
+                            <a class="btn btn-danger" th:href="@{'/admin/delTeacher/' + ${teacher.id}}"><i class="fa fa-trash-o fa-lg"></i></a>
                         </div>
                     </div>
 
