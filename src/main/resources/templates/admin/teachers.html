@@ -129,13 +129,13 @@
                         </div>
                     </div>
 
-                    <form>
+                    <form th:action="@{/admin/addTeachers}"  th:object="${userForm}" method="POST">
                         <div class="row row-margin-top">
                             <div class="col">
                                 <h6 ><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;Добавление новых членов группы</h6 >
                                 <div class="form-group">
                                     <label for="addPersonInGroup">Одна строка - ФИО одного члена группы</label>
-                                    <textarea class="form-control" id="addPersonInGroup" rows="8" cols="20"></textarea>
+                                    <textarea class="form-control"  th:field="*{fios}" id="addPersonInGroup" rows="8" cols="20"></textarea>
                                 </div>
                                 <button class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp; Добавить</button>
                             </div>

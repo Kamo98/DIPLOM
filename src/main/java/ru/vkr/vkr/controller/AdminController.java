@@ -4,17 +4,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.vkr.vkr.service.UserService;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.vkr.vkr.facade.AdminFacade;
+import ru.vkr.vkr.form.UserForm;
 
 @Controller
 public class AdminController {
     @Autowired
-    private UserService userService;
+    private AdminFacade adminFacade;
 
     @GetMapping("/admin/teachers")
     public String userList(Model model) {
+        UserForm userForm = new UserForm();
         model.addAttribute("isCreate", false);
+        model.addAttribute("userForm", userForm);
         return "admin/teachers";
+    }
+
+    @PostMapping("/admin/addTeachers")
+    public String addTeacher(Model model, @ModelAttribute("userForm") UserForm userForm) {
+        model.addAttribute("isCreate", false);
+        if (!adminFacade.addTeacher(userForm)) {
+            model.addAttribute(userForm);
+            return "admin/teachers";
+        }
+        return "redirect:/admin/teachers";
     }
 
    /* @GetMapping("/admin")
