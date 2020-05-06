@@ -3,9 +3,7 @@ package ru.vkr.vkr.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.vkr.vkr.domain.ROLE;
 import ru.vkr.vkr.entity.Teacher;
 import ru.vkr.vkr.facade.AdminFacade;
@@ -42,6 +40,14 @@ public class AdminController {
         }
         return "redirect:/admin/teachers";
     }
+
+
+    @PostMapping("/admin/delTeacher/{teacherId}")
+    public String deleteTeacher(Model model, @PathVariable Long teacherId) {
+        adminFacade.deleteTeacher(teacherId);
+        return "redirect:/admin/teachers";
+    }
+
 
    /* @GetMapping("/admin")
     public String userList(Model model) {

@@ -10,4 +10,8 @@ $(document).ready(function(){
     $("#submit").click(function(){
         $("#form").submit();
     })
+    $("#delTeacher").click(function(){
+        $("#formDelTeacher").submit();
+    })
 })
+
