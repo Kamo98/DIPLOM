@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.vkr.vkr.domain.ROLE;
 import ru.vkr.vkr.entity.Teacher;
 import ru.vkr.vkr.facade.AdminFacade;
 import ru.vkr.vkr.form.UserForm;
@@ -33,7 +34,7 @@ public class AdminController {
     @PostMapping("/admin/addTeachers")
     public String addTeacher(Model model, @ModelAttribute("userForm") UserForm userForm) {
         System.out.println("/admin/addTeachers");
-        if (!adminFacade.addUsers(userForm, AdminFacade.ROLE.ROLE_TEACHER)) {
+        if (!adminFacade.addUsers(userForm, ROLE.ROLE_TEACHER)) {
             model.addAttribute(userForm);
 
             System.out.println("ОШИБКА, пользователи не добавлены");

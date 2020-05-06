@@ -18,7 +18,7 @@ public class Teacher {
     @Column(nullable = false)
     private String middleName;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
 
     public void setId(Long id) {
