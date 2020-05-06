@@ -168,23 +168,27 @@
                     </div>
 
                     <div id="courseSettings" style="display: none;">
-                        <form th:action="@{/teacher/course}">
+                        <form class="needs-validation" novalidate action="#" th:action="${isCreate}? @{/teacher/course-create} : @{/teacher/course}" th:object="${course}" method="POST">
                             <div class="row row-margin-top">
                                 <div class="col-3 col-align-center">
                                     <label for="nameOfCourse">Наименование курса</label>
                                 </div>
                                 <div class="col">
-                                    <input type="text" id="nameOfCourse" class="form-control">
+                                    <input type="text" id="nameOfCourse" class="form-control" th:field="*{name}" >
+                                    <!--<div class="col invalid-tooltip">-->
+                                        <!--Наименование курса не может быть пустым-->
+                                    <!--</div>-->
+                                    <div class="col my-invalid-tooltip" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Ошибка</div>
                                 </div>
                             </div>
 
                             <div class="row row-margin-top">
                                 <div class = "col col-align-right">
-                                    <button class="btn btn-primary" th:unless="${isCreate}">
+                                    <button class="btn btn-primary" type="submit" th:unless="${isCreate}">
                                         <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Сохранить
                                     </button>
 
-                                    <button class="btn btn-primary" th:if="${isCreate}">
+                                    <button class="btn btn-primary" type="submit" th:if="${isCreate}">
                                         <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Создать
                                     </button>
                                 </div>
