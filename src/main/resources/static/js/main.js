@@ -12,6 +12,31 @@ $(document).ready(function(){
     });
 })
 
+//function buttonEditFioClick ()
+//{
+//    var div = document.getElementById ("editFIO");
+//    var button = document.getElementById ("myButtonFio");
+//
+//    if (div.contentEditable == "true") {
+//        div.contentEditable = "false";
+//        button.className = "btn btn-dark";
+//        $.ajax({
+//            type : 'get',
+//            url : "/admin/editTeacher/",
+//            data : {'fio' : div.textContent},
+//            dataType: "json",
+//            success : function() {
+//                console.log("фио было успешно изменено");
+//            }
+//        });
+//    }
+//    else  {
+//        div.contentEditable = "true";
+//        button.className = "btn btn-success";
+//    }
+//
+//}
+
 $(".myButtonFio").click(function(e){
     var editBtn = $(this);                              //Кнопка с редактированием
     var itemDivTeach = editBtn.parent().parent();     //Элемент списка с преподом
@@ -20,25 +45,38 @@ $(".myButtonFio").click(function(e){
 
     if (editBtn.hasClass("myButtonFioEdit")) {      //Завершаем редактирование
         var stringFIO = editInputFIO.val().trim();
-        var idTeacher = itemDivTeach.attr("id").split('_')[1];
-        textFIO.html('<i class="fa fa-user" aria-hidden="true"></i>&nbsp;' + stringFIO);
-        $.ajax({
-           type : 'post',
-           url : "/admin/editTeacher/",
-           data : {'fio' : stringFIO, 'idTeacher' : idTeacher},
-           dataType: "json",
-           success : function() {
-               console.log("фио было успешно изменено");
-           }
-       });
 
-        editInputFIO.hide();
-        textFIO.show(200);
-        editBtn.html('<i class="fa fa-pencil fa-fw"></i>');
-        editBtn.removeClass("myButtonFioEdit");
-        editBtn.removeClass("btn-success");
-        editBtn.addClass("btn-dark");
-        itemDivTeach.removeClass("editable-div-item");
+        var invalidDiv = itemDivTeach.find(".invalid-tooltip");
+        if (stringFIO.length == 0) {
+            invalidDiv.text("ФИО не должно быть пустым");
+            invalidDiv.show(200);
+        } else if (stringFIO.split(/\s+/).length != 3) {
+            invalidDiv.text("ФИО некорректно");
+            invalidDiv.show(200);
+        } else {
+            invalidDiv.hide();
+            var idTeacher = itemDivTeach.attr("id").split('_')[1];
+
+            $.ajax({
+               type : 'post',
+               url : "/admin/editTeacher/",
+               data : {'fio' : stringFIO, 'idTeacher' : idTeacher},
+               dataType: "json",
+               success : function() {
+                   console.log("фио было успешно изменено");
+               }
+           });
+
+            textFIO.html('<i class="fa fa-user" aria-hidden="true"></i>&nbsp;' + stringFIO);
+
+            editInputFIO.hide();
+            textFIO.show(200);
+            editBtn.html('<i class="fa fa-pencil fa-fw"></i>');
+            editBtn.removeClass("myButtonFioEdit");
+            editBtn.removeClass("btn-success");
+            editBtn.addClass("btn-dark");
+            itemDivTeach.removeClass("editable-div-item");
+        }
     } else {        //Начинаем редактирование
 
         textFIO.hide();
