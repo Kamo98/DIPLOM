@@ -41,6 +41,12 @@ public class AdminController {
         return "redirect:/admin/teachers";
     }
 
+    @ResponseBody
+    @GetMapping ("/admin/editTeacher/")
+    public String editFioTeacher(Model model, @RequestParam(value = "fio") String fio) {
+        return "redirect:/admin/teachers";
+    }
+
 
     @GetMapping("/admin/delTeacher/{teacherId}")
     public String deleteTeacher(Model model, @PathVariable Long teacherId) {

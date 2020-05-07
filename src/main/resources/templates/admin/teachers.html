@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="row item-mylist" th:each="teacher : ${teachers}">
-                        <div class="col col-align-center">
+                        <div class="col col-align-center" contenteditable="false" id="editFIO">
                             <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
                             [[ ${teacher.surname + " " + teacher.name + " " + teacher.middleName} ]]
                         </div>
@@ -45,12 +45,9 @@
                             </a>
                         </div>
                         <div class="col-1">
-                            <a class="btn btn-dark" href="#"><i class="fa fa-pencil fa-fw"></i></a>
+                            <a class="btn btn-dark" href="#" id="myButtonFio" onclick="buttonEditFioClick();"><i class="fa fa-pencil fa-fw"></i></a>
                         </div>
                         <div class="col-1">
-                            <!--<form th:id="formDelTeacher" th:action="@{'/admin/delTeacher/' + ${teacher.id}}" method="post">-->
-                                <!--<a class="btn btn-danger" th:id="delTeacher" href="javascript:void(0)"><i class="fa fa-trash-o fa-lg"></i></a>-->
-                            <!--</form>-->
                             <a class="btn btn-danger" th:href="@{'/admin/delTeacher/' + ${teacher.id}}"><i class="fa fa-trash-o fa-lg"></i></a>
                         </div>
                     </div>
