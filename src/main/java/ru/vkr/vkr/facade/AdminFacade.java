@@ -21,7 +21,7 @@ public class AdminFacade {
 
     public void editTeacher(Long teacherId, String newFio) {
         Teacher teacher = teacherRepository.findById(teacherId).get();
-        String []fio = newFio.split(" ");
+        String []fio = newFio.split(" +");
         teacher.setSurname(fio[0]);
         teacher.setName(fio[1]);
         teacher.setMiddleName(fio[2]);

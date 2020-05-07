@@ -12,31 +12,6 @@ $(document).ready(function(){
     });
 })
 
-//function buttonEditFioClick ()
-//{
-//    var div = document.getElementById ("editFIO");
-//    var button = document.getElementById ("myButtonFio");
-//
-//    if (div.contentEditable == "true") {
-//        div.contentEditable = "false";
-//        button.className = "btn btn-dark";
-//        $.ajax({
-//            type : 'get',
-//            url : "/admin/editTeacher/",
-//            data : {'fio' : div.textContent},
-//            dataType: "json",
-//            success : function() {
-//                console.log("фио было успешно изменено");
-//            }
-//        });
-//    }
-//    else  {
-//        div.contentEditable = "true";
-//        button.className = "btn btn-success";
-//    }
-//
-//}
-
 $(".myButtonFio").click(function(e){
     var editBtn = $(this);                              //Кнопка с редактированием
     var itemDivTeach = editBtn.parent().parent();     //Элемент списка с преподом
@@ -45,8 +20,6 @@ $(".myButtonFio").click(function(e){
 
     if (editBtn.hasClass("myButtonFioEdit")) {      //Завершаем редактирование
         var stringFIO = editInputFIO.val().trim();
-
-
         var idTeacher = itemDivTeach.attr("id").split('_')[1];
         textFIO.html('<i class="fa fa-user" aria-hidden="true"></i>&nbsp;' + stringFIO);
         $.ajax({
