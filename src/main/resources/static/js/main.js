@@ -46,20 +46,29 @@ $(".myButtonFio").click(function(e){
     if (editBtn.hasClass("myButtonFioEdit")) {      //Завершаем редактирование
         var stringFIO = editInputFIO.val().trim();
 
-//        if (stringFIO.length == 0) {
-//
-//        }
+        var invalidDiv = itemDivTeach.find(".invalid-tooltip");
+        if (stringFIO.length == 0) {
+            invalidDiv.text("ФИО не должно быть пустым");
+            invalidDiv.show(200);
+        } else if (stringFIO.split(/\s+/).length != 3) {
+            invalidDiv.text("ФИО некорректно");
+            invalidDiv.show(200);
+        } else {
+            invalidDiv.hide();
+            var idTeacher = itemDivTeach.attr("id").split('_')[1];
 
-        var idTeacher = itemDivTeach.attr("id").split('_')[1];
-        textFIO.html('<i class="fa fa-user" aria-hidden="true"></i>&nbsp;' + stringFIO);
+            //todo: тут ajax для изменения idTeacher, и если он успешен, то выполняем всё, что ниже
 
-        editInputFIO.hide();
-        textFIO.show(200);
-        editBtn.html('<i class="fa fa-pencil fa-fw"></i>');
-        editBtn.removeClass("myButtonFioEdit");
-        editBtn.removeClass("btn-success");
-        editBtn.addClass("btn-dark");
-        itemDivTeach.removeClass("editable-div-item");
+            textFIO.html('<i class="fa fa-user" aria-hidden="true"></i>&nbsp;' + stringFIO);
+
+            editInputFIO.hide();
+            textFIO.show(200);
+            editBtn.html('<i class="fa fa-pencil fa-fw"></i>');
+            editBtn.removeClass("myButtonFioEdit");
+            editBtn.removeClass("btn-success");
+            editBtn.addClass("btn-dark");
+            itemDivTeach.removeClass("editable-div-item");
+        }
     } else {        //Начинаем редактирование
 
         textFIO.hide();

@@ -38,6 +38,7 @@
                         <div class="col col-align-center" contenteditable="false">
                             <span class="textFIO"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;[[ ${teacher.surname + " " + teacher.name + " " + teacher.middleName} ]]</span>
                             <input type="text" class="form-control editInputFIO" style="display:none;" th:value="${teacher.surname + ' ' + teacher.name + ' ' + teacher.middleName}">
+                            <div class="invalid-tooltip"></div>
                         </div>
                         <div class="col col-align-center">
                             <a href="#"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;
