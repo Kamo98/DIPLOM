@@ -42,8 +42,10 @@ public class AdminController {
     }
 
     @ResponseBody
-    @GetMapping ("/admin/editTeacher/")
-    public String editFioTeacher(Model model, @RequestParam(value = "fio") String fio) {
+    @PostMapping ("/admin/editTeacher/")
+    public String editFioTeacher(Model model, @RequestParam(value = "fio") String newFio,
+                                              @RequestParam(value = "idTeacher") Long idTeacher) {
+        adminFacade.editTeacher(idTeacher, newFio);
         return "redirect:/admin/teachers";
     }
 

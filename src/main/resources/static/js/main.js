@@ -46,12 +46,18 @@ $(".myButtonFio").click(function(e){
     if (editBtn.hasClass("myButtonFioEdit")) {      //Завершаем редактирование
         var stringFIO = editInputFIO.val().trim();
 
-//        if (stringFIO.length == 0) {
-//
-//        }
 
         var idTeacher = itemDivTeach.attr("id").split('_')[1];
         textFIO.html('<i class="fa fa-user" aria-hidden="true"></i>&nbsp;' + stringFIO);
+        $.ajax({
+           type : 'post',
+           url : "/admin/editTeacher/",
+           data : {'fio' : stringFIO, 'idTeacher' : idTeacher},
+           dataType: "json",
+           success : function() {
+               console.log("фио было успешно изменено");
+           }
+       });
 
         editInputFIO.hide();
         textFIO.show(200);

@@ -19,9 +19,12 @@ public class AdminFacade {
         return userService.addUsers(userForm, ROLE.ROLE_TEACHER);
     }
 
-    public void editTeacher(Long teacherId, String name) {
+    public void editTeacher(Long teacherId, String newFio) {
         Teacher teacher = teacherRepository.findById(teacherId).get();
-        teacher.setName(name);
+        String []fio = newFio.split(" ");
+        teacher.setSurname(fio[0]);
+        teacher.setName(fio[1]);
+        teacher.setMiddleName(fio[2]);
         teacherRepository.save(teacher);
     }
 
