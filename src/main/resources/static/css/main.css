@@ -167,6 +167,13 @@ hr {
 
 }
 
+
+.editable-div-item {
+    border: 2px #008500 solid;
+    border-radius: 10px;
+    box-shadow: 5px 5px;
+}
+
 .tabs-menu {
     border-top: 2px #078600 solid;
     margin-bottom: 1.5rem;
