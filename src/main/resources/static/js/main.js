@@ -57,7 +57,15 @@ $(".myButtonFio").click(function(e){
             invalidDiv.hide();
             var idTeacher = itemDivTeach.attr("id").split('_')[1];
 
-            //todo: тут ajax для изменения idTeacher, и если он успешен, то выполняем всё, что ниже
+            $.ajax({
+               type : 'post',
+               url : "/admin/editTeacher/",
+               data : {'fio' : stringFIO, 'idTeacher' : idTeacher},
+               dataType: "json",
+               success : function() {
+                   console.log("фио было успешно изменено");
+               }
+           });
 
             textFIO.html('<i class="fa fa-user" aria-hidden="true"></i>&nbsp;' + stringFIO);
 
