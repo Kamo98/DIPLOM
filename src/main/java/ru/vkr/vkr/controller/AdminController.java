@@ -46,7 +46,7 @@ public class AdminController {
     public String editFioTeacher(Model model, @RequestParam(value = "fio") String newFio,
                                               @RequestParam(value = "idTeacher") Long idTeacher) {
         adminFacade.editTeacher(idTeacher, newFio);
-        return "redirect:/admin/teachers";
+        return newFio;
     }
 
 

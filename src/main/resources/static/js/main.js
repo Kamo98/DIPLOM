@@ -10,32 +10,17 @@ $(document).ready(function(){
     $("#submit").click(function(){
         $("#form").submit();
     });
+    $("#curUserName").ajaxComplete( $.ajax({
+        type : 'get',
+        url : "/username",
+        data : {},
+        dataType: "html",
+        success : function(data) {
+            $("#curUserName").html(data);
+            console.log("name = " + data);
+        }
+    }));
 })
-
-//function buttonEditFioClick ()
-//{
-//    var div = document.getElementById ("editFIO");
-//    var button = document.getElementById ("myButtonFio");
-//
-//    if (div.contentEditable == "true") {
-//        div.contentEditable = "false";
-//        button.className = "btn btn-dark";
-//        $.ajax({
-//            type : 'get',
-//            url : "/admin/editTeacher/",
-//            data : {'fio' : div.textContent},
-//            dataType: "json",
-//            success : function() {
-//                console.log("фио было успешно изменено");
-//            }
-//        });
-//    }
-//    else  {
-//        div.contentEditable = "true";
-//        button.className = "btn btn-success";
-//    }
-//
-//}
 
 $(".myButtonFio").click(function(e){
     var editBtn = $(this);                              //Кнопка с редактированием
@@ -61,9 +46,9 @@ $(".myButtonFio").click(function(e){
                type : 'post',
                url : "/admin/editTeacher/",
                data : {'fio' : stringFIO, 'idTeacher' : idTeacher},
-               dataType: "json",
-               success : function() {
-                   console.log("фио было успешно изменено");
+               dataType: "html",
+               success : function(data) {
+                   console.log("фио было успешно изменено " + data);
                }
            });
 

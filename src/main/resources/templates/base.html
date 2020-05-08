@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 
     <head th:fragment="common_header(title)">
@@ -41,8 +42,12 @@
 
                         </ul>
 
-                        <!-- Отображается либо "Войти" либо Имя -->
-                        <a href=""><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Иванов Иван</a>
+                        <!-- Имя текущего пользователя -->
+                        <div sec:authorize="isAuthenticated()">
+                        <a href="" id="curUserName">
+                            <span class="curUserNameText"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;</span>
+                            </a>
+                        </div>
                         &nbsp;&nbsp;|&nbsp;&nbsp;
                         <form id="form" th:action="@{/logout}" method="post">
                             <a href="javascript:void(0)" id="submit" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Выйти</a>
