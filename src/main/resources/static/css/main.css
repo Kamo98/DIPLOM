@@ -164,7 +164,16 @@ hr {
 .item-mylist {
     padding-top: 1rem;
     padding-bottom: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 
+}
+
+
+.editable-div-item {
+    border: 2px #008500 solid;
+    border-radius: 10px;
+    box-shadow: 5px 5px;
 }
 
 .tabs-menu {

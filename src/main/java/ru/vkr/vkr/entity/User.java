@@ -1,5 +1,6 @@
 package ru.vkr.vkr.entity;
 
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -25,7 +26,7 @@ public class User implements UserDetails {
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Teacher teacher;
 
     public User() {
