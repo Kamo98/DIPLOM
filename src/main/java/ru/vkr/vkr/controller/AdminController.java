@@ -1,6 +1,20 @@
 package ru.vkr.vkr.controller;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,10 +24,18 @@ import ru.vkr.vkr.facade.AdminFacade;
 import ru.vkr.vkr.form.UserForm;
 import ru.vkr.vkr.repository.TeacherRepository;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 public class AdminController {
+    private static Logger logger = LoggerFactory.getLogger(AdminController.class);
+
     @Autowired
     private AdminFacade adminFacade;
     @Autowired
@@ -56,7 +78,109 @@ public class AdminController {
         return "redirect:/admin/teachers";
     }
 
+    @RequestMapping(value = "/admin/getpdf", method = RequestMethod.GET)
+    public ResponseEntity<Object> downloadFile() throws IOException
+    {
+        String filename = "C:/tmp/report.pdf";
+        File file = new File(filename);
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition",
+                String.format("attachment; filename=\"%s\"", file.getName()));
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        ResponseEntity<Object> responseEntity = ResponseEntity.ok().headers(headers)
+                .contentLength(file.length())
+                .contentType(MediaType.parseMediaType("application/txt")).body(resource);
+
+        return responseEntity;
+    }
+
+   /* @RequestMapping(value="/admin/getpdf", method=RequestMethod.POST)
+    public ResponseEntity<Byte[]> getPDF() {
+        // generate the file
+        try {
+            getMyDocument();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // retrieve contents of "C:/tmp/report.pdf" that were written in showHelp
+        Byte[] contents = getByteDocument();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        // Here you have to set the actual filename of your pdf
+        String filename = "output.pdf";
+        headers.setContentDispositionFormData(filename, filename);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        ResponseEntity<Byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
+        return response;
+    }
+
+    public static Byte[] getByteDocument () {
+        java.nio.file.Path path = Paths.get("C:/tmp/report.pdf");
+        ArrayList<Byte> doc = new ArrayList<>();
+        try (FileInputStream fileInputStream = new FileInputStream(String.valueOf(path));
+             BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream)) {
+            int count = 0;
+            int current = 0;
+            while ((current = fileInputStream.read()) != -1) {
+                count = fileInputStream.read();
+                for (int i = 0; i < count; ++i) {
+                    doc.add((byte) current);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Byte[] result = new Byte[doc.size()];
+        return doc.toArray(result);
+    }
+
+    public static Document getMyDocument() throws Exception {
+        Document document = new Document();
+
+        PdfWriter.getInstance(document, new FileOutputStream("C:/tmp/report.pdf"));
+        document.open();
+        document.add(new Paragraph("table"));
+        document.add(new Paragraph(new Date().toString()));
+        PdfPTable table=new PdfPTable(2);
+
+        PdfPCell cell = new PdfPCell (new Paragraph ("table"));
+
+        cell.setColspan (2);
+        cell.setHorizontalAlignment (Element.ALIGN_CENTER);
+        cell.setPadding (10.0f);
+        cell.setBackgroundColor (new BaseColor(140, 221, 8));
+
+        table.addCell(cell);
+        ArrayList<String[]> row=new ArrayList<String[]>();
+        String[] data=new String[2];
+        data[0]="1";
+        data[1]="2";
+        String[] data1=new String[2];
+        data1[0]="3";
+        data1[1]="4";
+        row.add(data);
+        row.add(data1);
+
+        for(int i=0;i<row.size();i++) {
+            String[] cols=row.get(i);
+            for(int j=0;j<cols.length;j++){
+                table.addCell(cols[j]);
+            }
+        }
+
+        document.add(table);
+        document.close();
+
+        return document;
+    }*/
    /* @GetMapping("/admin")
     public String userList(Model model) {
         model.addAttribute("allUsers", userService.allUsers());
