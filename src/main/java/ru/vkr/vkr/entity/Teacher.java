@@ -23,7 +23,7 @@ public class Teacher {
     private User user;
 
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "teacherAuthor", fetch = FetchType.LAZY)
     private Set<Course> courses;
 
 

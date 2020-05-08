@@ -15,7 +15,9 @@ public class Course {
     @Column(nullable = false)
     private String name;
 
-
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacherAuthor;
 
     public String getName() {
         return name;
