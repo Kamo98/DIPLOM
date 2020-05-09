@@ -30,7 +30,7 @@ public class DownloadController {
     private AdminFacade adminFacade;
 
     private static final String FONT = "static\\fonts\\DejaVuSans.ttf";
-    private static final String FILE_PATH = "/tmp/report.pdf";
+    private static final String FILE_PATH = "src\\main\\resources\\tmp\\report.pdf";
     private static final String APPLICATION_PDF = "application/pdf";
 
     @RequestMapping(value = "/b", method = RequestMethod.GET, produces = APPLICATION_PDF)
