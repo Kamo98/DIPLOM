@@ -47,6 +47,7 @@ public class TeacherController {
     }
 
 
+
     @GetMapping("/teacher")
     public String mainTeacher() {
         //todo: нужно переделать главную страницу преподавателя
@@ -93,6 +94,14 @@ public class TeacherController {
 
         //И переходим к группе
         return "redirect:/teacher/group/" + group.getId();
+    }
+
+    //Удаление группы
+    @GetMapping("/teacher/group-delete/{groupId}")
+    public String deleteGroup(@PathVariable Long groupId) {
+        Group group = groupService.getGroupById(groupId);
+        groupService.deleteGroup(group);
+        return "redirect:/teacher";
     }
 
 
@@ -155,7 +164,7 @@ public class TeacherController {
 
     //Удаление курса
     @GetMapping("/teacher/course-delete/{courseId}")
-    public String deleteTeacher(Model model, @PathVariable Long courseId) {
+    public String deleteTeacher(@PathVariable Long courseId) {
         Course course = courseService.getCourseById(courseId);
         courseService.deleteCourse(course);
         return "redirect:/teacher";
