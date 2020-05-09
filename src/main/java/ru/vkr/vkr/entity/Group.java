@@ -18,7 +18,7 @@ public class Group {
     @Size(min=5, max=250, message = "Наименование группы должно содержать более 5 и менее 250 символов")
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id")
     private Teacher teacherOwner;
 
