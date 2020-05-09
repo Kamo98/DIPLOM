@@ -33,6 +33,7 @@ public class DownloadController {
     private static final String FILE_PATH = "src\\main\\resources\\tmp\\report.pdf";
     private static final String APPLICATION_PDF = "application/pdf";
 
+    // скачивание pdf документа с логинами и паролями пользоваетелй
     @RequestMapping(value = "/b", method = RequestMethod.GET, produces = APPLICATION_PDF)
     public @ResponseBody
     HttpEntity<byte[]> downloadB() throws Exception {

@@ -9,6 +9,7 @@ import java.util.List;
 
 @Controller
 public class StudentController {
+    // получить список групп студентов
     @GetMapping("/student/genTeams")
     public String genTeams(Model model) {
         Test test = new Test();

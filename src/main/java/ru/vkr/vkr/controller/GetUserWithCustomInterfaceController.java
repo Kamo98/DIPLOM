@@ -37,6 +37,7 @@ public class GetUserWithCustomInterfaceController {
     @PersistenceContext
     EntityManager entityManager;
 
+    // получить имя текущего атворизованного пользователя
     @RequestMapping(value = "/username", method = RequestMethod.GET)
     @ResponseBody
     public String currentUserNameSimple() {
