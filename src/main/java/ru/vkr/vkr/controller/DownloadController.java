@@ -20,8 +20,6 @@ import ru.vkr.vkr.facade.AdminFacade;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +29,7 @@ public class DownloadController {
     @Autowired
     private AdminFacade adminFacade;
 
-    private static final String FONT = "src\\main\\resources\\static\\fonts\\DejaVuSans.ttf";
+    private static final String FONT = "static\\fonts\\DejaVuSans.ttf";
     private static final String FILE_PATH = "/tmp/report.pdf";
     private static final String APPLICATION_PDF = "application/pdf";
 
@@ -77,6 +75,8 @@ public class DownloadController {
         table.addCell(cell);
         List<Teacher> teacherArrayList = adminFacade.getTeachers();
 
+
+
         String[] fio = new String[teacherArrayList.size()];
         String[] login = new String[teacherArrayList.size()];
         String[] password = new String[teacherArrayList.size()];
@@ -89,6 +89,11 @@ public class DownloadController {
             ++jj;
         }
         Font mainFont = FontFactory.getFont(FONT, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 10.0f);
+
+        table.addCell(new Phrase("ФИО", mainFont));
+        table.addCell("login");
+        table.addCell("password");
+
         for (int i = 0; i < teacherArrayList.size(); i++) {
             table.addCell(new Phrase(fio[i], mainFont));
             table.addCell(login[i]);
