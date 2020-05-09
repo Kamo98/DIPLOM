@@ -30,7 +30,7 @@
             <div class="container" id="containerOfTabs">
 
                 <div id="teachMembers">
-                    <div th:if="${not #lists.isEmpty(teachers)}" class="alert alert-warning" role="alert">
+                    <div th:if="${#lists.isEmpty(teachers)}" class="alert alert-warning" role="alert">
                         Группа пуста. Добавьте студентов.
                     </div>
 
@@ -42,7 +42,7 @@
                         </div>
                         <div class="col col-align-center">
                             <a href="#"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;
-                                Личные результаты
+                                Курсы
                             </a>
                         </div>
                         <div class="col-1">
@@ -56,7 +56,7 @@
 
                     <div class="row row-margin-top">
                         <div class="col">
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" id="downloadLoginPassword">
                                 <i class="fa fa-key" aria-hidden="true"></i>&nbsp;Скачать логины и пароли
                             </button>
                         </div>

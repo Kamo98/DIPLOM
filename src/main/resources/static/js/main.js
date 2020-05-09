@@ -1,30 +1,45 @@
 //Клик по любой ссылке в табах
 //Скрывает все вкладки и удаляет выделения во на всех ссылках
-$('.tabs-menu a').click(function(e){
+$('.tabs-menu a').click(function (e) {
     $('.tabs-menu a').removeClass('active');
     $('#containerOfTabs>div').hide();
     e.preventDefault();
 });
 
-$(document).ready(function(){
-    $("#submit").click(function(){
+$(document).ready(function () {
+    $("#submit").click(function () {
         $("#form").submit();
     });
-
-    $("#curUserName").ajaxComplete( $.ajax({
-        type : 'get',
-        url : "/username",
-        data : {},
+    $("#curUserName").ajaxComplete($.ajax({
+        type: 'get',
+        url: "/username",
+        data: {},
         dataType: "html",
-        success : function(data) {
+        success: function (data) {
             $("#curUserName").html(data);
             console.log("name = " + data);
         }
     }));
-});
+    $("#downloadLoginPassword").click(function () {
+        $.ajax({
+            type : 'get',
+            url: '/download/b',
+            dataType: 'binary',
+            xhrFields: {
+                'responseType': 'blob'
+            },
+            success: function (data, status, xhr) {
+                var blob = new Blob([data], {type: xhr.getResponseHeader('Content-Type')});
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'report.pdf';
+                link.click();
+            }
+        })
+    });
+})
 
-
-$(".myButtonFio").click(function(e) {
+$(".myButtonFio").click(function (e) {
     var editBtn = $(this);                              //Кнопка с редактированием
     var itemDivTeach = editBtn.parent().parent();     //Элемент списка с преподом
     var editInputFIO = itemDivTeach.find(".editInputFIO");  //Инпут для редактирования
@@ -45,14 +60,14 @@ $(".myButtonFio").click(function(e) {
             var idTeacher = itemDivTeach.attr("id").split('_')[1];
 
             $.ajax({
-               type : 'post',
-               url : "/admin/editTeacher/",
-               data : {'fio' : stringFIO, 'idTeacher' : idTeacher},
-               dataType: "html",
-               success : function(data) {
-                   console.log("фио было успешно изменено " + data);
-               }
-           });
+                type: 'post',
+                url: "/admin/editTeacher/",
+                data: {'fio': stringFIO, 'idTeacher': idTeacher},
+                dataType: "html",
+                success: function (data) {
+                    console.log("фио было успешно изменено " + data);
+                }
+            });
 
             textFIO.html('<i class="fa fa-user" aria-hidden="true"></i>&nbsp;' + stringFIO);
 
@@ -98,4 +113,5 @@ $(".myButtonFio").click(function(e) {
         form.classList.add('was-validated');
       }, false);
     });
+  }, false);
   }, false);
