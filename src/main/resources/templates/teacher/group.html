@@ -18,8 +18,8 @@
 
 
             <div class="main-content col-9 border rounded-lg">
-                <h5 class="centered green-h" th:unless="${isCreate}">Группа "Олимпийская сборная (2й курс)"</h5>
-                <h5 class="centered green-h" th:if="${isCreate}">Группа "Без названия"</h5>
+                <h5 class="centered green-h" th:unless="${isCreate}">Группа "[[ ${group.name} ]]"</h5>
+                <h5 class="centered green-h" th:if="${isCreate}">Группа "Новая группа"</h5>
 
 
                 <ul class="nav nav-pills tabs-menu">
@@ -130,9 +130,9 @@
 
                             </div>
                             <div class = "col col-align-right">
-                                <button class="btn btn-danger">
+                                <a class="btn btn-danger" th:href="@{'/teacher/group-delete/' + ${group.id}}">
                                     <i class="fa fa-trash-o fa-lg"></i>&nbsp;Удалить группу
-                                </button>
+                                </a>
                             </div>
                         </div>
 
@@ -152,23 +152,24 @@
 
 
                     <div id="groupSettings" style="display: none;">
-                        <form th:action="@{/teacher/group}">
+                        <form th:action="${isCreate}? @{/teacher/group-create}: @{'/teacher/group/' + ${group.id}}" th:object="${group}" method="POST">
                             <div class="row row-margin-top">
                                 <div class="col-3 col-align-center">
                                     <label for="nameOfGroup">Наименование группы</label>
                                 </div>
                                 <div class="col">
-                                    <input type="text" id="nameOfGroup" class="form-control">
+                                    <input type="text" id="nameOfGroup" class="form-control" th:field="*{name}" >
+                                    <div class="col my-invalid-tooltip" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Некорректное наименование</div>
                                 </div>
                             </div>
 
                             <div class="row row-margin-top">
                                 <div class = "col col-align-right">
-                                    <button class="btn btn-primary" th:unless="${isCreate}">
+                                    <button class="btn btn-primary" type="submit" th:unless="${isCreate}">
                                         <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Сохранить
                                     </button>
 
-                                    <button class="btn btn-primary" th:if="${isCreate}">
+                                    <button class="btn btn-primary" type="submit" th:if="${isCreate}">
                                         <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Создать
                                     </button>
                                 </div>

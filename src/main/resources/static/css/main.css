@@ -190,3 +190,24 @@ hr {
 }
 
 /****************/
+
+
+
+
+/*************
+****Формы****/
+
+.my-invalid-tooltip {
+  position: absolute;
+  top: 100%;
+  z-index: 5;
+  display: block;
+  max-width: 100%;
+  padding: 0.25rem 0.5rem;
+  margin-top: .1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #fff;
+  background-color: rgba(220, 53, 69, 0.9);
+  border-radius: 0.25rem;
+}

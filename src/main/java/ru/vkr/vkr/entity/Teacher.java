@@ -1,6 +1,7 @@
 package ru.vkr.vkr.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "t_teacher")
@@ -20,6 +21,11 @@ public class Teacher {
 
     @OneToOne(fetch = FetchType.LAZY)
     private User user;
+
+
+    @OneToMany(mappedBy = "teacherAuthor", fetch = FetchType.LAZY)
+    private Set<Course> courses;
+
 
     public void setId(Long id) {
         this.id = id;
@@ -59,5 +65,13 @@ public class Teacher {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 }
