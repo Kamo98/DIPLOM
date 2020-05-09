@@ -8,6 +8,8 @@ import ru.vkr.vkr.form.UserForm;
 import ru.vkr.vkr.repository.TeacherRepository;
 import ru.vkr.vkr.service.UserService;
 
+import java.util.List;
+
 @Component
 public class AdminFacade {
     @Autowired
@@ -31,5 +33,9 @@ public class AdminFacade {
     public boolean deleteTeacher(Long teacherId) {
         Teacher teacher = teacherRepository.findById(teacherId).get();
         return userService.deleteUser(teacher.getUser().getId());
+    }
+
+    public List<Teacher> getTeachers() {
+        return teacherRepository.findAll();
     }
 }

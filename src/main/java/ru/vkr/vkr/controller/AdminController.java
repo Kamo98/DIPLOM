@@ -142,45 +142,7 @@ public class AdminController {
         return doc.toArray(result);
     }
 
-    public static Document getMyDocument() throws Exception {
-        Document document = new Document();
-
-        PdfWriter.getInstance(document, new FileOutputStream("C:/tmp/report.pdf"));
-        document.open();
-        document.add(new Paragraph("table"));
-        document.add(new Paragraph(new Date().toString()));
-        PdfPTable table=new PdfPTable(2);
-
-        PdfPCell cell = new PdfPCell (new Paragraph ("table"));
-
-        cell.setColspan (2);
-        cell.setHorizontalAlignment (Element.ALIGN_CENTER);
-        cell.setPadding (10.0f);
-        cell.setBackgroundColor (new BaseColor(140, 221, 8));
-
-        table.addCell(cell);
-        ArrayList<String[]> row=new ArrayList<String[]>();
-        String[] data=new String[2];
-        data[0]="1";
-        data[1]="2";
-        String[] data1=new String[2];
-        data1[0]="3";
-        data1[1]="4";
-        row.add(data);
-        row.add(data1);
-
-        for(int i=0;i<row.size();i++) {
-            String[] cols=row.get(i);
-            for(int j=0;j<cols.length;j++){
-                table.addCell(cols[j]);
-            }
-        }
-
-        document.add(table);
-        document.close();
-
-        return document;
-    }*/
+   */
    /* @GetMapping("/admin")
     public String userList(Model model) {
         model.addAttribute("allUsers", userService.allUsers());
