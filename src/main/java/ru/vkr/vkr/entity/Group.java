@@ -27,6 +27,10 @@ public class Group {
     @ManyToMany(mappedBy = "subscribers")
     private Set<Course> courseSubscriptions;
 
+    //todo: сейчас при удалении группы удаляются все студенты вместе с учётками
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Student> students;
+
     public Group() {
     }
 
@@ -65,5 +69,13 @@ public class Group {
 
     public void setCourseSubscriptions(Set<Course> courseSubscriptions) {
         this.courseSubscriptions = courseSubscriptions;
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
 }

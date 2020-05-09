@@ -89,7 +89,10 @@ public class UserService implements UserDetailsService {
                 .setParameter("paramId", idMin).getResultList();
     }
 
-    public boolean addUsers(UserForm userForm, ROLE role) {
+    //todo: когда будет интерфейс, нужно будет возвращать его, а не идентификаторы teacher или student
+    public List<Long> addUsers(UserForm userForm, ROLE role) {
+        List<Long> usersId = new ArrayList<>();
+
         String fios = userForm.getFios().trim();
         List<String> surname = new ArrayList<>();
         List<String> name = new ArrayList<>();
@@ -102,11 +105,11 @@ public class UserService implements UserDetailsService {
                 logger.info("AdminFacade.addUsers: fio = " + fio);
                 String[] curFIO = fio.trim().split(" +");
                 if (curFIO.length < 3) {
-                    return false;
+                    return null;
                 } else {
-                    logger.info("AdminFacade.addUsers: surname = " + curFIO[0]);
-                    logger.info("AdminFacade.addUsers: name = " + curFIO[1]);
-                    logger.info("AdminFacade.addUsers: middleName = " + curFIO[2]);
+                    logger.info("UserService.addUsers: surname = " + curFIO[0]);
+                    logger.info("UserService.addUsers: name = " + curFIO[1]);
+                    logger.info("UserService.addUsers: middleName = " + curFIO[2]);
                     surname.add(curFIO[0].trim());
                     name.add(curFIO[1].trim());
                     middleName.add(curFIO[2].trim());
@@ -114,7 +117,7 @@ public class UserService implements UserDetailsService {
             }
         }
 
-        logger.info("AdminFacade.addUsers: count surnames = " + surname.size());
+        logger.info("UserService.addUsers: count surnames = " + surname.size());
         for (int i = 0; i < surname.size(); ++i) {
             User user = new User();
             //todo: логин сделал как транслит фио, по идее это норм, но длину при этом мы не контролируем
@@ -125,16 +128,17 @@ public class UserService implements UserDetailsService {
             user.setRole(roleRepository.findById(role.getId()).get());
             saveUser(user);
 
-            logger.info("AdminFacade.addUsers: fio = " + fiosArr[i] + "  login = " + login + "  pass = " + password);
+            logger.info("UserService.addUsers: fio = " + fiosArr[i] + "  login = " + login + "  pass = " + password);
 
             switch (role) {
-                case ROLE_ADMIN: {
+                case ROLE_STUDENT: {
                     Student student = new Student();
                     student.setMiddleName(middleName.get(i));
                     student.setName(name.get(i));
                     student.setSurname(surname.get(i));
                     student.setUser(user);
                     studentRepository.save(student);
+                    usersId.add(student.getId());
                     break;
                 }
                 case ROLE_TEACHER: {
@@ -144,11 +148,12 @@ public class UserService implements UserDetailsService {
                     teacher.setSurname(surname.get(i));
                     teacher.setUser(user);
                     teacherRepository.save(teacher);
+                    usersId.add(teacher.getId());
                     break;
                 }
-                default: return false;
+                default: return null;
             }
         }
-        return true;
+        return usersId;
     }
 }

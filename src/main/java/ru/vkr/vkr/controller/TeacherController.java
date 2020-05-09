@@ -4,18 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.vkr.vkr.domain.ROLE;
 import ru.vkr.vkr.entity.Course;
 import ru.vkr.vkr.entity.Group;
+import ru.vkr.vkr.entity.Student;
+import ru.vkr.vkr.entity.User;
 import ru.vkr.vkr.facade.AdminFacade;
+import ru.vkr.vkr.facade.TeacherFacade;
 import ru.vkr.vkr.form.SubscriptionForm;
 import ru.vkr.vkr.form.UserForm;
+import ru.vkr.vkr.repository.StudentRepository;
 import ru.vkr.vkr.service.CourseService;
 import ru.vkr.vkr.service.GroupService;
+import ru.vkr.vkr.service.UserService;
+import java.util.List;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -30,6 +33,12 @@ public class TeacherController {
     private GroupService groupService;
     @Autowired
     private AdminFacade adminFacade;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private StudentRepository studentRepository;
+    @Autowired
+    private TeacherFacade teacherFacade;
 
     //todo: костыльное решение для активизации нужной вкладки при загрузке страницы
     private String pageTabAttribute = "tabMain";
@@ -121,8 +130,6 @@ public class TeacherController {
         Course course = courseService.getCourseById(courseId);
         SubscriptionForm subscriptionForm = new SubscriptionForm();
         Set<Group> courseSubscribers = course.getSubscribers();
-        if (courseSubscribers.size() == 0)      //Подписчиков у курса нет
-            courseSubscribers = null;
         model.addAttribute("course", course);
         model.addAttribute("subscriptionForm", subscriptionForm);
         model.addAttribute("courseSubscribers",  courseSubscribers);
@@ -172,7 +179,7 @@ public class TeacherController {
 
     //Удаление курса
     @GetMapping("/teacher/course-delete/{courseId}")
-    public String deleteTeacher(@PathVariable Long courseId) {
+    public String deletCourse(@PathVariable Long courseId) {
         Course course = courseService.getCourseById(courseId);
         courseService.deleteCourse(course);
         return "redirect:/teacher";
@@ -219,15 +226,41 @@ public class TeacherController {
 
     @PostMapping("/teacher/group/{groupId}/addStudent")
     public String addStudent(Model model, UserForm userForm, @PathVariable Long groupId) {
-        if (!adminFacade.addUsers(userForm, ROLE.ROLE_STUDENT)) {
+        Group group = groupService.getGroupById(groupId);
+        List<Long> usersId = userService.addUsers(userForm, ROLE.ROLE_STUDENT);
+        if (usersId == null) {
             //todo: возможном нужна валидация при добавлении студентов
             System.out.println("ОШИБКА, пользователи не добавлены");
+            return "redirect:/teacher/group/" + groupId;
         }
 
-        return "redirect:/admin/teachers";
+        //Сделать всех новых пользователе йчленами группы
+        for(Long userId : usersId) {
+            Student student = studentRepository.getOne(userId);
+            student.setGroup(group);
+            studentRepository.save(student);
+        }
+
+        return "redirect:/teacher/group/" + groupId;
     }
 
 
+    @ResponseBody
+    @PostMapping ("/teacher/editStudent/")
+    public String editFioStudent(Model model, @RequestParam(value = "fio") String newFio,
+                                 @RequestParam(value = "idStudent") Long idStudent) {
+        teacherFacade.editStudent(idStudent, newFio);
+        return newFio;
+    }
+
+
+    //Удаление студента
+    @GetMapping("/teacher/group/{groupId}/delete/{studentId}")
+    public String deleteStudent(@PathVariable Long groupId, @PathVariable Long studentId) {
+        Student student = studentRepository.getOne(studentId);
+        studentRepository.delete(student);
+        return "redirect:/teacher/group/" + groupId;
+    }
 
     @GetMapping("/teacher/theme")
     public String testTheme() {

@@ -29,6 +29,10 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Teacher teacher;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Student student;
+
+
     public User() {
     }
 
@@ -107,4 +111,11 @@ public class User implements UserDetails {
         this.passwordConfirm = passwordConfirm;
     }
 
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 }

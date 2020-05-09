@@ -1,6 +1,7 @@
 package ru.vkr.vkr.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 
 @Entity
 @Table(name = "t_student")
@@ -18,8 +19,12 @@ public class Student {
     @Column(nullable = false)
     private String middleName;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "group_id")
+    private Group group;
 
     public void setId(Long id) {
         this.id = id;
@@ -59,5 +64,13 @@ public class Student {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }

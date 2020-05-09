@@ -54,7 +54,7 @@ public class AdminController {
     @PostMapping("/admin/addTeachers")
     public String addTeacher(Model model, @ModelAttribute("userForm") UserForm userForm) {
         System.out.println("/admin/addTeachers");
-        if (!adminFacade.addUsers(userForm, ROLE.ROLE_TEACHER)) {
+        if (adminFacade.addUsers(userForm, ROLE.ROLE_TEACHER) == null) {
             model.addAttribute(userForm);
 
             System.out.println("ОШИБКА, пользователи не добавлены");

@@ -96,7 +96,7 @@
                     </div>
 
                     <div id="subscribesOfCourse" th:unless="${isCreate}" style="display: none;">
-                        <div class="alert alert-warning" role="alert" th:unless="${courseSubscribers}">
+                        <div class="alert alert-warning" role="alert" th:if="${courseSubscribers.empty}">
                             На курс пока не подписана ни одна группа
                         </div>
                         <div class="alert alert-danger" role="alert" th:if="${groupRepeat}">
