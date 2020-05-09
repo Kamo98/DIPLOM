@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.vkr.vkr.domain.ROLE;
 import ru.vkr.vkr.entity.Course;
 import ru.vkr.vkr.entity.Group;
+import ru.vkr.vkr.facade.AdminFacade;
 import ru.vkr.vkr.form.SubscriptionForm;
+import ru.vkr.vkr.form.UserForm;
 import ru.vkr.vkr.service.CourseService;
 import ru.vkr.vkr.service.GroupService;
 
@@ -25,6 +28,8 @@ public class TeacherController {
     private CourseService courseService;
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private AdminFacade adminFacade;
 
     //todo: костыльное решение для активизации нужной вкладки при загрузке страницы
     private String pageTabAttribute = "tabMain";
@@ -59,7 +64,10 @@ public class TeacherController {
     public String groupGet(Model model, @PathVariable Long groupId) {
         //todo: нужен контроль доступа к группе (только владелец имеет доступ)
         Group group = groupService.getGroupById(groupId);
+        UserForm userForm = new UserForm();
+
         model.addAttribute("group", group);
+        model.addAttribute("userForm", userForm);
         return "teacher/group";
     }
 
@@ -205,6 +213,20 @@ public class TeacherController {
         pageTabAttribute = "pageSubscribes";            //Для активации вкладки с подписчиками
         return "redirect:/teacher/course/" + courseId;
     }
+
+
+
+
+    @PostMapping("/teacher/group/{groupId}/addStudent")
+    public String addStudent(Model model, UserForm userForm, @PathVariable Long groupId) {
+        if (!adminFacade.addUsers(userForm, ROLE.ROLE_STUDENT)) {
+            //todo: возможном нужна валидация при добавлении студентов
+            System.out.println("ОШИБКА, пользователи не добавлены");
+        }
+
+        return "redirect:/admin/teachers";
+    }
+
 
 
     @GetMapping("/teacher/theme")
