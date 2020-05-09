@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name="t_course")
@@ -26,7 +27,9 @@ public class Course {
     @JoinTable(name="t_courseSubscriber",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
-    private Collection<Group> subscribers;
+    private Set<Group> subscribers;
+
+
 
     public String getName() {
         return name;
@@ -55,5 +58,14 @@ public class Course {
     @Override
     public String toString() {
         return id + ": " + name + " by " + teacherAuthor.getSurname();
+    }
+
+
+    public Set<Group> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(Set<Group> subscribers) {
+        this.subscribers = subscribers;
     }
 }

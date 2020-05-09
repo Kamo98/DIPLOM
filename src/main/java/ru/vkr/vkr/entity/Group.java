@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name="t_group")
@@ -24,7 +25,7 @@ public class Group {
 
     //Подписки на курсы
     @ManyToMany(mappedBy = "subscribers")
-    private Collection<Course> courseSubscriptions;
+    private Set<Course> courseSubscriptions;
 
     public Group() {
     }
@@ -51,5 +52,18 @@ public class Group {
 
     public void setTeacherOwner(Teacher teacherOwner) {
         this.teacherOwner = teacherOwner;
+    }
+
+    @Override
+    public String toString() {
+        return "id = " + id + "  name = " + name;
+    }
+
+    public Set<Course> getCourseSubscriptions() {
+        return courseSubscriptions;
+    }
+
+    public void setCourseSubscriptions(Set<Course> courseSubscriptions) {
+        this.courseSubscriptions = courseSubscriptions;
     }
 }

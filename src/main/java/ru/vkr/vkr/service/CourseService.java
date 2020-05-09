@@ -1,15 +1,19 @@
 package ru.vkr.vkr.service;
 
+import edu.csus.ecs.pc2.ui.EditGroupFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import ru.vkr.vkr.entity.Course;
+import ru.vkr.vkr.entity.Group;
 import ru.vkr.vkr.entity.Teacher;
 import ru.vkr.vkr.entity.User;
 import ru.vkr.vkr.facade.AuthenticationFacade;
+import ru.vkr.vkr.form.SubscriptionForm;
 import ru.vkr.vkr.repository.CourseRepository;
+import ru.vkr.vkr.repository.GroupRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,6 +25,9 @@ public class CourseService {
     private CourseRepository courseRepository;
     @Autowired
     private AuthenticationFacade authenticationFacade;
+    @Autowired
+    private GroupRepository groupRepository;
+
 
 
     private static Logger logger = LoggerFactory.getLogger(UserService.class);
@@ -46,7 +53,19 @@ public class CourseService {
         return courseRepository.getOne(idCourse);
     }
 
-    public Collection<Course> getCoursesByCurentTeacher() {
+    public Collection<Course> getCoursesByCurrentTeacher() {
         return courseRepository.findByTeacherAuthor_id(authenticationFacade.getCurrentTeacher().getId());
+    }
+
+    public boolean containsGroup(Course course, Group group) {
+        return course.getSubscribers().contains(group);
+    }
+
+    public void signUpForCourse(Course course, Group group) {
+        course.getSubscribers().add(group);
+    }
+
+    public void signDownForCourse(Course course, Group group) {
+        course.getSubscribers().remove(group);
     }
 }

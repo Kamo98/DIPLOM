@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.vkr.vkr.entity.Course;
 import ru.vkr.vkr.entity.Group;
+import ru.vkr.vkr.form.SubscriptionForm;
 import ru.vkr.vkr.service.CourseService;
 import ru.vkr.vkr.service.GroupService;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.Set;
 
 @Controller
 public class TeacherController {
@@ -24,14 +26,24 @@ public class TeacherController {
     @Autowired
     private GroupService groupService;
 
+    //todo: костыльное решение для активизации нужной вкладки при загрузке страницы
+    private String pageTabAttribute = "tabMain";
+
+    //Для вывода сообщений пользоваетлю
+    private String messageAttribute = "no";
+
 
     //На любой странице teacher/* будут отображаться курсы
     @ModelAttribute
     public void addAttributes(Model model) {
-        Collection<Course> teacherCourses = courseService.getCoursesByCurentTeacher();
+        Collection<Course> teacherCourses = courseService.getCoursesByCurrentTeacher();
         Collection<Group> teacherGroups = groupService.getGroupsByCurrentTeacher();
         model.addAttribute("teacherCourses", teacherCourses);
         model.addAttribute("teacherGroups", teacherGroups);
+        model.addAttribute(pageTabAttribute, true);
+        pageTabAttribute = "tabMain";
+        model.addAttribute(messageAttribute, true);
+        messageAttribute = "no";
     }
 
 
@@ -90,7 +102,13 @@ public class TeacherController {
     public String courseGet(Model model, @PathVariable Long courseId) {
         //todo: нужен контроль доступа к курсу (только автор имеет доступ)
         Course course = courseService.getCourseById(courseId);
+        SubscriptionForm subscriptionForm = new SubscriptionForm();
+        Set<Group> courseSubscribers = course.getSubscribers();
+        if (courseSubscribers.size() == 0)      //Подписчиков у курса нет
+            courseSubscribers = null;
         model.addAttribute("course", course);
+        model.addAttribute("subscriptionForm", subscriptionForm);
+        model.addAttribute("courseSubscribers",  courseSubscribers);
         return "teacher/course";
     }
 
@@ -142,6 +160,43 @@ public class TeacherController {
         courseService.deleteCourse(course);
         return "redirect:/teacher";
     }
+
+
+
+    //Подписка группы на курс
+    @PostMapping("/teacher/course/{courseId}/signUp")
+    public String signUpForCourse(@PathVariable Long courseId, SubscriptionForm subscriptionForm) {
+        //todo: нужна проверка на владение курсом и группой
+        Course course = courseService.getCourseById(courseId);
+        Group group = subscriptionForm.getGroup();
+
+        if (courseService.containsGroup(course, group)) {
+            //На курс такая группа уже подписана
+            messageAttribute = "groupRepeat";
+        } else {
+            courseService.signUpForCourse(course, group);
+            courseService.saveCourse(course);
+        }
+
+        pageTabAttribute = "pageSubscribes";            //Для активации вкладки с подписчиками
+        return "redirect:/teacher/course/" + courseId;
+    }
+
+
+    //Отписка группы от курса
+    @GetMapping("/teacher/course/{courseId}/signDown/{groupId}")
+    public String signDownForCourse(@PathVariable Long courseId, @PathVariable Long groupId) {
+        //todo: нужна проверка на владение курсом и группой
+        Course course = courseService.getCourseById(courseId);
+        Group group = groupService.getGroupById(groupId);
+
+        courseService.signDownForCourse(course, group);
+        courseService.saveCourse(course);
+
+        pageTabAttribute = "pageSubscribes";            //Для активации вкладки с подписчиками
+        return "redirect:/teacher/course/" + courseId;
+    }
+
 
     @GetMapping("/teacher/theme")
     public String testTheme() {

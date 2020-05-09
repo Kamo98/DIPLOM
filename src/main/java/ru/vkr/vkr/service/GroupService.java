@@ -46,4 +46,6 @@ public class GroupService {
     public Collection<Group> getGroupsByCurrentTeacher() {
         return groupRepository.findByTeacherOwner_id(authenticationFacade.getCurrentTeacher().getId());
     }
+
+
 }
