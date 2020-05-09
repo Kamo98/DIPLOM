@@ -19,8 +19,8 @@
 
 
             <div class="main-content col-9 border rounded-lg">
-                <h5 class="centered green-h" th:unless="${isCreate}">Курс "Олимпиадные тренировки"</h5>
-                <h5 class="centered green-h" th:if="${isCreate}">Курс "Без названия"</h5>
+                <h5 class="centered green-h" th:unless="${isCreate}">Курс "[[ ${course.name} ]]"</h5>
+                <h5 class="centered green-h" th:if="${isCreate}">Курс "Новый курс"</h5>
 
 
                 <ul class="nav nav-pills tabs-menu">
@@ -88,9 +88,9 @@
 
                             </div>
                             <div class = "col col-align-right">
-                                <button class="btn btn-danger">
+                                <a class="btn btn-danger" th:href="@{'/teacher/course-delete/'+${course.id}}">
                                     <i class="fa fa-trash-o fa-lg"></i>&nbsp;Удалить курс
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -98,23 +98,6 @@
                     <div id="subscribesOfCourse" th:unless="${isCreate}" style="display: none;">
                         <div class="alert alert-warning" role="alert">
                             На курс пока не подписана ни одна группа
-                        </div>
-
-                        <div class="row item-mylist">
-                            <div class="col col-align-center">
-                                <i class="fa fa-users" aria-hidden="true"></i>&nbsp;
-                                Группа 2
-                            </div>
-                            <div class="col col-align-center">
-                                <a href="/group"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;
-                                    Перейти к группе
-                                </a>
-                            </div>
-                            <div class="col-3">
-                                <a class="btn btn-danger" href="#"><i class="fa fa-trash-o fa-lg"></i>&nbsp;
-                                    Отписать от курса
-                                </a>
-                            </div>
                         </div>
 
                         <div class="row item-mylist">
@@ -149,9 +132,7 @@
 
                                         <div class="col">
                                             <select class="form-control" id="selectGroups">
-                                                <option>Группа 1</option>
-                                                <option>Группа 2</option>
-                                                <option>Группа 3</option>
+                                                <option th:each="group : ${teacherGroups}" th:value="">Группа</option>
                                             </select>
                                         </div>
                                     </div>
@@ -168,7 +149,8 @@
                     </div>
 
                     <div id="courseSettings" style="display: none;">
-                        <form class="needs-validation" novalidate action="#" th:action="${isCreate}? @{/teacher/course-create} : @{/teacher/course}" th:object="${course}" method="POST">
+                        <form class="needs-validation" novalidate th:action="${isCreate}? @{'/teacher/course-create'} : @{'/teacher/course/' + ${course.id}}"
+                              th:object="${course}" method="POST">
                             <div class="row row-margin-top">
                                 <div class="col-3 col-align-center">
                                     <label for="nameOfCourse">Наименование курса</label>
@@ -178,7 +160,7 @@
                                     <!--<div class="col invalid-tooltip">-->
                                         <!--Наименование курса не может быть пустым-->
                                     <!--</div>-->
-                                    <div class="col my-invalid-tooltip" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Ошибка</div>
+                                    <div class="col my-invalid-tooltip" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Некорректное наименование</div>
                                 </div>
                             </div>
 
