@@ -264,6 +264,6 @@ public class TeacherController {
 
     @GetMapping("/teacher/theme")
     public String testTheme() {
-        return "theme";
+        return "teacher/theme";
     }
 }
