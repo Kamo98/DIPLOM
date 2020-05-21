@@ -64,8 +64,7 @@ public class TeacherController {
 
     @GetMapping("/teacher")
     public String mainTeacher() {
-        //todo: нужно переделать главную страницу преподавателя
-        return "redirect:/teacher/group-create";
+        return "teacher/main";
     }
 
 
